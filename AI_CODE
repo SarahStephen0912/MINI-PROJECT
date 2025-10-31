@@ -1,0 +1,23 @@
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn import metrics
+
+# Sample data
+reviews = ["Excellent food and service", "Worst experience ever", "Good value for money", "Not recommended", "Will buy again", "Very bad taste"]
+labels = ["positive", "negative", "positive", "negative", "positive", "negative"]
+
+# Text vectorization
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(reviews)
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, labels, test_size=0.3, random_state=42)
+
+# Naive Bayes model
+model = MultinomialNB()
+model.fit(X_train, y_train)
+
+# Prediction and evaluation
+pred = model.predict(X_test)
+print("Accuracy:", metrics.accuracy_score(y_test, pred))
